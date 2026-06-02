@@ -1,3 +1,6 @@
+#include <CSFML/Graphics/Shader.h>
+#include <CSFML/Window/Keyboard.h>
+
 #include "../turtlec.h"
 
 void branch(Turtle* t, float length, int deep, float angle) {
@@ -12,6 +15,12 @@ void branch(Turtle* t, float length, int deep, float angle) {
     branch(t, length * 0.7, deep - 1, angle);
 
     turtleLeft(t, angle);
+
+    if (deep <= 3) {
+        turtleSetColor(t, 32, 171, 17);
+    } else {
+        turtleSetColor(t, 71, 44, 44);
+    }
     turtleBackward(t, length);
 }
 
