@@ -1,10 +1,26 @@
 #include "turtlec.h"
 
+#include <CSFML/Window/WindowBase.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
 #include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
 
 static const float PI = 3.14159265359f;
+
+static void turtleSetWMClass(sfRenderWindow* window) {
+    Window xid = sfRenderWindow_getNativeHandle(window);
+    Display* display = XOpenDisplay(NULL);
+    if (display && xid) {
+        XClassHint* hint = XAllocClassHint();
+        hint->res_name = "turtlec";
+        hint->res_class = "TurtleC";
+        XSetClassHint(display, xid, hint);
+        XFree(hint);
+        XCloseDisplay(display);
+    }
+}
 
 static void turtleMoveTo(Turtle* turtle, sfVector2f newPos, bool drawLine) {
     if (drawLine) {
@@ -183,6 +199,7 @@ TurtleApp* turtleAppCreate(unsigned int width, unsigned int height, const char* 
         return NULL;
     }
 
+    turtleSetWMClass(app->window);
     turtleInit(&app->turtle, app->window, width, height);
     return app;
 }

@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -I.
-LDLIBS = -lcsfml-graphics -lcsfml-window -lcsfml-system -lm
+LDLIBS = -lcsfml-graphics -lcsfml-window -lcsfml-system -lX11 -lm
 
 all: testLine
 
