@@ -2,10 +2,10 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -I.
 LDLIBS = -lcsfml-graphics -lcsfml-window -lcsfml-system -lX11 -lm
 
-all: testLine
+all: $(patsubst examples/%.c, %, $(wildcard examples/*.c))
 
-testLine: turtlec.c examples/testLine.c turtlec.h
-	$(CC) $(CFLAGS) turtlec.c examples/testLine.c -o testLine $(LDLIBS)
+%: examples/%.c turtlec.c turtlec.h
+	$(CC) $(CFLAGS) turtlec.c $< -o $@ $(LDLIBS)
 
 clean:
-	rm -f testLine
+	rm -f $(patsubst examples/%.c, %, $(wildcard examples/*.c))
